@@ -4,8 +4,12 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom/cjs/react-ro
 // import Favorites from '../Favorites/Favorites.jsx';
 // import Search from '../Search/Search.jsx';
 
+import { StoreProvider } from '../store/store.jsx';
+import Input from '../Input/Input.jsx';
+
 function App(props) {
   return (
+    <StoreProvider>
     <div>
       <Router>
         <ul>
@@ -20,7 +24,7 @@ function App(props) {
           </li>
         </ul>
         <Route exact path="/">
-          {/* <Home /> */}
+          <Input />
         </Route>
         <Route exact path="/favorites">
           {/* <Favorites /> */}
@@ -31,6 +35,7 @@ function App(props) {
       </Router>
       <h1>Giphy Search!</h1>
     </div>
+  </StoreProvider>
   );
 }
 
