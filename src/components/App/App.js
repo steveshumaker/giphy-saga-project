@@ -1,5 +1,4 @@
 import React from "react";
-import GiphyDisplay from "../GiphyDisplay/GiphyDisplay";
 
 function App(props) {
   return (
