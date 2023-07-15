@@ -3,11 +3,12 @@ import { Provider } from "react-redux";
 import logger from "redux-logger";
 
 //reducers
-function giphySearchReducer(state = '', action) {
-    if (action.type === "GIPHY_SEARCH") {
-      return action.payload;
-    }
-    return state;
+
+function giphySearchReducer(state = [], action) {
+  if (action.type === "GIPHY_SEARCH") {
+    return action.payload;
+  }
+  return state;
 }
 
 //store
@@ -23,3 +24,4 @@ const store = createStore(
     return <Provider store={store}>{children}</Provider>;
   }
   
+
