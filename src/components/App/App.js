@@ -1,16 +1,15 @@
-import React from "react";
-import {
-  HashRouter as Router,
-  Route,
-  Link,
-} from "react-router-dom/cjs/react-router-dom.min";
+import React from 'react';
+import { HashRouter as Router, Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
+
 // import Home from '../Home/Home.jsx';
 // import Favorites from '../Favorites/Favorites.jsx';
 // import Search from '../Search/Search.jsx';
 
+
 import { StoreProvider } from "../store/store.jsx";
 import Input from "../Input/Input.jsx";
 import GiphyDisplay from "../GiphyDisplay/GiphyDisplay.jsx";
+
 
 function App(props) {
   const fetchGif = () => {
@@ -18,12 +17,12 @@ function App(props) {
       .then((response) => {
         console.log("fetching...");
         const gif = response.json();
-        console.log("CLIENT GIF DATA ----> ", gif);
+        console.log('CLIENT GIF DATA ----> ',gif);
         return gif;
         // console.log("GIF DATA ----> ", response);
       })
       .then((data) => {
-        console.log("CLIENT DATA --> ", data.data);
+        console.log('CLIENT DATA --> ', data.data);
       });
   };
 
@@ -57,7 +56,9 @@ function App(props) {
         <button onClick={fetchGif}>Fetch Gif</button>
       </div>
     </StoreProvider>
+
   );
 }
 
 export default App;
+

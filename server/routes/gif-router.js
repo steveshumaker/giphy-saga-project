@@ -5,6 +5,7 @@ const router = express.Router();
 
 const apiKey = `67LD3d4iW5Vx7kSAaOK03fYSFJx1vHJP`;
 
+
 router.get(`/:query`, (req, res) => {
   console.log(req.params.query);
   fetch(

@@ -6,9 +6,10 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Route includes
-const favoriteRouter = require("./routes/favorite.router");
-const categoryRouter = require("./routes/category.router");
-const gifRouter = require("./routes/gif-router");
+const favoriteRouter = require('./routes/favorite.router');
+const categoryRouter = require('./routes/category.router');
+const gifRouter = require('./routes/gif-router');
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -18,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
 // Routes
-app.use("/api/favorite", favoriteRouter);
-app.use("/api/category", categoryRouter);
-app.use("/api/gifs", gifRouter);
+app.use('/api/favorite', favoriteRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/gifs', gifRouter);
 
 // Listen
 app.listen(PORT, () => {
