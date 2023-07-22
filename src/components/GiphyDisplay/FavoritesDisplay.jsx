@@ -16,28 +16,29 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Button from "@mui/material/Button";
 
 const FavoritesDisplay = () => {
-  const giphyFavorites = [
-    {
-      id: 1,
-      title: "White Dog GIF",
-      gif: "https://media2.giphy.com/media/4Zo41lhzKt6iZ8xff9/200.gif?cid=184bf328cje1b6a0haszvwti1rswgxbt2hfnfjvpyiudhvvr&ep=v1_gifs_search&rid=200.gif&ct=g",
-      username: "username",
-      category_id: 2,
-    },
-  ];
+  //   const giphyFavorites = [
+  //     {
+  //       id: 1,
+  //       title: "White Dog GIF",
+  //       gif: "https://media2.giphy.com/media/4Zo41lhzKt6iZ8xff9/200.gif?cid=184bf328cje1b6a0haszvwti1rswgxbt2hfnfjvpyiudhvvr&ep=v1_gifs_search&rid=200.gif&ct=g",
+  //       username: "username",
+  //       category_id: 2,
+  //     },
+  //   ];
 
-  //   const [giphyFavorites, setGiphyFavorites] = useState([]);
+  const [giphyFavorites, setGiphyFavorites] = useState([]);
 
-  //   useEffect(() => {
-  //     fetch("/api/favoite")
-  //       .then((response) => response.json())
-  //       .then(setGiphyFavorites)
-  //       .catch((error) => console.log(error));
-  //   }, []);
+  useEffect(() => {
+    fetch("/api/favorite")
+      .then((response) => response.json())
+      .then(setGiphyFavorites)
+      .catch((error) => console.log(error));
+  }, []);
 
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [isMenu, setIsMenu] = useState(false);
+  const [menuId, setMenuId] = useState("");
   const [categoryToSet, setCategoryToSet] = useState("");
 
   useEffect(() => {
@@ -94,7 +95,10 @@ const FavoritesDisplay = () => {
                   subtitle={username}
                   actionIcon={
                     <IconButton
-                      onClick={() => setIsMenu(!isMenu)}
+                      onClick={() => {
+                        setIsMenu(!isMenu);
+                        setMenuId(id);
+                      }}
                       sx={{ color: "rgba(255, 255, 255, 0.54)" }}
                       aria-label={`info about ${title}`}
                     >
@@ -102,7 +106,7 @@ const FavoritesDisplay = () => {
                     </IconButton>
                   }
                 />
-                {isMenu && (
+                {isMenu && menuId === id && (
                   <Container>
                     <FormControl fullWidth>
                       <InputLabel id="set-favorites">Category</InputLabel>
@@ -125,7 +129,28 @@ const FavoritesDisplay = () => {
                         </MenuItem>
                       </Select>
                     </FormControl>
-                    <Button>Save</Button>
+                    <Button
+                      onClick={() => {
+                        console.log(categoryToSet);
+                        fetch(`/api/favorite/${id}`, {
+                          method: "PUT",
+                          body: JSON.stringify({ categoryToSet }),
+                          headers: { "Content-Type": "application/json" },
+                        })
+                          .then(() => {
+                            fetch("/api/favorite")
+                              .then((response) => response.json())
+                              .then(setGiphyFavorites)
+                              .catch((error) => console.log(error));
+                            setIsMenu(false);
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }}
+                    >
+                      Save
+                    </Button>
                   </Container>
                 )}
               </ImageListItem>

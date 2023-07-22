@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   pool
     .query(QUERY)
     .then((response) => {
-      response.json();
+      return response.rows;
     })
     .then((favGifs) => {
       res.send(favGifs).status(200);
@@ -38,9 +38,9 @@ router.post("/", (req, res) => {
 router.put("/:favId", (req, res) => {
   // req.body should contain a category_id to add to this favorite image
   const gifId = req.params.favId;
-  const categoryId = req.body;
+  const categoryId = req.body.categoryToSet;
 
-  const QUERY = `UPDATE favorites SET category_id = $2 WHERE favorites.id = $2;`;
+  const QUERY = `UPDATE favorites SET category_id = $2 WHERE favorites.id = $1;`;
 
   pool
     .query(QUERY, [gifId, categoryId])
