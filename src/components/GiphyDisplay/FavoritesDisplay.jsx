@@ -12,9 +12,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Button from "@mui/material/Button";
 
 const FavoritesDisplay = () => {
-  //   const { giphyFavorites } = useSelector((store) => store);
   const giphyFavorites = [
     {
       id: 1,
@@ -25,8 +26,19 @@ const FavoritesDisplay = () => {
     },
   ];
 
+  //   const [giphyFavorites, setGiphyFavorites] = useState([]);
+
+  //   useEffect(() => {
+  //     fetch("/api/favoite")
+  //       .then((response) => response.json())
+  //       .then(setGiphyFavorites)
+  //       .catch((error) => console.log(error));
+  //   }, []);
+
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isMenu, setIsMenu] = useState(false);
+  const [categoryToSet, setCategoryToSet] = useState("");
 
   useEffect(() => {
     fetch("api/category")
@@ -82,14 +94,40 @@ const FavoritesDisplay = () => {
                   subtitle={username}
                   actionIcon={
                     <IconButton
-                      onClick={toggleFavorite}
+                      onClick={() => setIsMenu(!isMenu)}
                       sx={{ color: "rgba(255, 255, 255, 0.54)" }}
                       aria-label={`info about ${title}`}
                     >
-                      <FavoriteIcon />
+                      <MoreHorizIcon />
                     </IconButton>
                   }
                 />
+                {isMenu && (
+                  <Container>
+                    <FormControl fullWidth>
+                      <InputLabel id="set-favorites">Category</InputLabel>
+                      <Select
+                        labelId="favorites-category-picker"
+                        id="favorites-category-pick"
+                        value={categoryToSet}
+                        label="Age"
+                        onChange={(event) =>
+                          setCategoryToSet(event.target.value)
+                        }
+                      >
+                        {categories.map((cat) => (
+                          <MenuItem key={cat.id} value={cat.id}>
+                            {cat.name}
+                          </MenuItem>
+                        ))}
+                        <MenuItem key="none" value="">
+                          None
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                    <Button>Save</Button>
+                  </Container>
+                )}
               </ImageListItem>
             );
           }
