@@ -11,17 +11,24 @@ function giphySearchReducer(state = [], action) {
   return state;
 }
 
+// function giphyFavoriteReducer(state = [], action) {
+//   switch (action.type) {
+//     case `ADD_FAVORITE`:
+//       return action.payload;
+//   }
+//   return state;
+// }
+
 //store
 
 const store = createStore(
-    combineReducers({
-      giphySearch: giphySearchReducer 
-    }),
-    applyMiddleware(logger)
-  );
-  
-  export function StoreProvider({ children }) {
-    return <Provider store={store}>{children}</Provider>;
-  }
-  
+  combineReducers({
+    giphySearch: giphySearchReducer,
+    // giphyFavorite: giphyFavoriteReducer,
+  }),
+  applyMiddleware(logger)
+);
 
+export function StoreProvider({ children }) {
+  return <Provider store={store}>{children}</Provider>;
+}
